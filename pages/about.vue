@@ -46,6 +46,7 @@
   //alert(JSON.stringify(fields))
   //await new Promise((r) => setTimeout(r, 1000))
   const res = await useFetch('/api/tasks', { method: 'post', body: { name: fields['name'], completed: false } })
+  //console.log(JSON.stringify(res.data.value))
 }
 const counter = useCounterStore();
 </script>

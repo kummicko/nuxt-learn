@@ -11,6 +11,7 @@ interface IRequestBody {
     try {
         const newTaskData = await tasks.create({name, completed});
         return {
+            id: newTaskData._id,
             name: newTaskData.name,
             completed: newTaskData.completed
         }
