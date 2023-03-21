@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
         return tasksData.map((task) => ({
             name: task.name,
             completed: task.completed,
+            created: task.createdAt
         }));
     } catch (err) {
         console.dir(err);

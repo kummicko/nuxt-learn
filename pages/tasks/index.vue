@@ -1,6 +1,8 @@
 <template>
-    <div v-for="task in taskStore.tasks">
-        {{ task.name }} - {{ task.completed }}
+    <div class="grid gap-2">
+      <div v-for="task in taskStore.tasks">
+        <TaskCard :task="task" />
+      </div>
     </div>
 </template>
 

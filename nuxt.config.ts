@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     '@formkit/nuxt',
     ['@pinia/nuxt', {
       autoImports: ['defineStore','definePiniaStore', 'acceptHMRUpdate'],
-    }]
+    }],
+    'nuxt-icon'
   ],
   app: {
     head: {
