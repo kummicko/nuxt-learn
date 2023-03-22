@@ -4,7 +4,6 @@ interface IRequestBody {
     name: string,
     completed: boolean
   }
-  
   export default defineEventHandler(async (event) => {
     console.log("POST /api/tasks");
     const { name, completed } = await readBody<IRequestBody>(event);
