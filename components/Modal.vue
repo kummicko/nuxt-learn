@@ -4,22 +4,16 @@
     </transition>
     <transition name="pop" appear>
         <div class="modal" role="dialog" v-if="showModal">
-          <textarea v-model="taskStore.currentTask.name" name="" id="" cols="25" rows="8"></textarea>
-          <div class="flex justify-around mt-4">
-            <button @click="updateCurrentTask()" class="mt-auto italic bg-green-500 text-sm py-1 px-2 text-white mr-1 rounded"><span>&#x2714;</span>Update</button>
-            <button @click="showModal=false" class="mt-auto italic bg-red-600 text-sm py-1 px-2 text-white rounded"><span>&#x2717;</span>Cancel</button>
-          </div>
+            <EditModal v-if="showEditModal" />
+            <DeleteModal v-if="showDeleteModal" />
         </div>
     </transition>
 </template>
 
 <script setup>
   const showModal = useModal()
-  const taskStore = useTaskStore()
-  function updateCurrentTask() {
-    taskStore.updateTask(taskStore.currentTask)
-    showModal.value = false
-  }
+  const showEditModal = useEditModal()
+  const showDeleteModal = useDeleteModal()
 </script>
 
 <style scoped>

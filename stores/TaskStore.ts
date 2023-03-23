@@ -24,18 +24,12 @@ export const useTaskStore = defineStore('taskStore', {
           const taskToUpdate = this.tasks.find(task => task.id === incomingTask.id)
           if(taskToUpdate) {
             taskToUpdate.name = incomingTask.name
-            // async (incomingTask: TaskObject) => {
-              console.log('task:', incomingTask)
-              const body = JSON.stringify({ id: incomingTask.id, name: incomingTask.name, completed: incomingTask.completed })
-              console.log(body)
-              //await useFetch('/api/tasks', { method: 'PATCH', body: body })
-              const res = await fetch('/api/tasks', {
-                method: 'PATCH',
-                body: body,
-                headers: {'Content-Type': 'application/json'}
-              })
-           }
+            await useFetch('/api/tasks/'+taskToUpdate.id,
+                { method: 'PATCH',
+                  body: JSON.stringify({
+                        name: taskToUpdate.name,
+                        completed: taskToUpdate.completed})})
+          }
          }
-        // }
     }
 })

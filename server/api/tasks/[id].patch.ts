@@ -7,15 +7,13 @@ interface IRequestBody {
 }
 
 export default defineEventHandler(async (event) => {
-  console.log("PATCH /api/tasks");
-  const { id, name, completed } = await readBody<IRequestBody>(event)
-  const filter = { _id: id }
+  const taskId = event?.context?.params?.id;
+  const { name, completed } = await readBody<IRequestBody>(event)
+  const filter = { _id: taskId }
   const update = { name: name, completed: completed }
-  console.log(filter._id)
-  console.log(update)
   try {
       await tasks.findOneAndUpdate( filter, update, {
-        new: true
+        returnOriginal: false
       })
   } catch (err) {
     console.dir(err);
@@ -25,4 +23,5 @@ export default defineEventHandler(async (event) => {
       message: "Something wrong.",
     }
   }
+  return {message: "Successfully updated"}
 })
