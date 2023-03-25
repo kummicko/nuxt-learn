@@ -3,13 +3,14 @@ import { tasks } from "../../dbModels"
 interface IRequestBody {
     id: string;
     name: string;
+    completed: string;
 }
 
 export default defineEventHandler(async (event) => {
   const taskId = event?.context?.params?.id;
-  const { name } = await readBody<IRequestBody>(event)
+  const { name, completed } = await readBody<IRequestBody>(event)
   const filter = { _id: taskId }
-  const update = { name: name }
+  const update = { name: name, completed: completed }
   try {
       await tasks.findOneAndUpdate( filter, update, {
         returnOriginal: false

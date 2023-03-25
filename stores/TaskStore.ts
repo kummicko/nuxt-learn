@@ -20,32 +20,21 @@ export const useTaskStore = defineStore('taskStore', {
         setCurrentTask(id: string) {
           this.currentTask = JSON.parse(JSON.stringify(this.tasks.find(task => task.id === id)))
         },
-        toggleCompleted() {
-          //let taskToUpdate = this.tasks.find(task => task.id === this.currentTask.id)
-          //if(taskToUpdate) {
-            if(this.currentTask.completed === 'false') {
-              this.currentTask.completed = 'true'
-              //taskToUpdate.completed = this.currentTask.completed
-            } else {
-              this.currentTask.completed = 'false'
-              //taskToUpdate.completed = 'false'
-              // taskToUpdate.completed = this.currentTask.completed
-            }
-            // this.updateTask()
-          //}
-        },
         async updateTask() {
-          // const taskToUpdate = this.tasks.find(task => task.id === this.currentTask.id)
-          // if(taskToUpdate) {
-          //   taskToUpdate.name = this.currentTask.name
-          //   taskToUpdate.completed = this.currentTask.completed
-            await useFetch('/api/tasks/'+this.currentTask.id,
-                { method: 'PATCH',
-                  body: JSON.stringify({
-                    name: this.currentTask.name,
-                    completed: this.currentTask.completed
-                  })
-                })
+          const taskToUpdate = this.tasks.find(task => task.id === this.currentTask.id)
+          if(taskToUpdate) {
+            taskToUpdate.name = this.currentTask.name
+          }
+          await useFetch('/api/tasks/'+this.currentTask.id,
+                        { method: 'PATCH',
+                          body: JSON.stringify({
+                            name: this.currentTask.name,
+                            completed: this.currentTask.completed
+                          })
+                        })
+        },
+        async deleteTask() {
+          await useFetch('api/tasks/'+this.currentTask.id, { method: 'delete' })
         }
     }
 })
