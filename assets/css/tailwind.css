@@ -13,4 +13,7 @@ body {
   .card {
     @apply p-3 rounded-md bg-white shadow-md h-full;
   }
+  .small-button {
+    @apply shadow shadow-black italic text-sm py-1 px-2 rounded focus:shadow-none;
+  }
 }

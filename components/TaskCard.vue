@@ -4,13 +4,14 @@
           <p class="inline-block align-middle italic mr-4 font-light text-sm text-gray-600"><span class="mr-1">Created:</span>{{ formatDate(task.created) }}</p>
       </div>
       <div class="flex-1">
-          <p class="inline-block align-middle font-bold text-gray-500 m4" :class="task.completed ? 'text-decoration: line-through': 'text-decoration: none'">{{ task.name }}</p>
+          <p class="inline-block align-middle font-bold text-gray-500 text-lg" :class="task.completed ? 'text-decoration: line-through': 'text-decoration: none'">{{ task.name }}</p>
       </div>
-      <div class="flex justify-end">
+      <div class="flex justify-end mt-2 md:mt-0">
           <!-- <Icon name="uil:github" size="2rem" /> -->
-          <button @click="sendTaskToModal(task); showEditModal=true" class="shadow shadow-black mt-auto italic bg-blue-500 text-sm py-1 px-2 text-white mr-2 rounded focus:shadow-none" :data-id="task.id"><span class="mr-1">&#x270E;</span>Edit</button>
-          <button class="shadow shadow-black mt-auto italic bg-green-500 text-sm py-1 px-2 text-white mr-1 rounded focus:shadow-none" :data-id="task.id"><span class="mr-1">&#x2714;</span>Mark completed</button>
-          <button v-if="task.completed" @click="sendTaskToModal(task); showDeleteModal=true" class="mt-auto italic bg-red-600 text-sm py-1 px-2 text-white rounded" :data-id="task.id"><span class="mr-1">&#x2717;</span>Delete</button>
+          <button v-if="!task.completed" @click="sendTaskToModal(task); showEditModal=true" class="small-button mt-auto bg-blue-500 text-white mr-2"><span class="mr-1">&#x270E;</span>Edit</button>
+          <button v-if="!task.completed" @click="toggleCompleted()" class="small-button mt-auto bg-green-500 text-white mr-1"><span class="mr-2">&#x2714;</span>Mark completed</button>
+          <button v-if="task.completed" @click="toggleCompleted()" class="small-button mt-auto bg-yellow-500 mr-1"><span class="mr-2">&#x2714;</span>Mark uncompleted</button>
+          <button v-if="task.completed" @click="sendTaskToModal(task); showDeleteModal=true" class="small-button mt-auto bg-red-600 text-white"><span class="mr-1">&#x2717;</span>Delete</button> 
       </div>
     </div>
 </template>
@@ -21,6 +22,12 @@
   const showEditModal = useEditModal()
   const showDeleteModal = useDeleteModal()
   const taskStore = useTaskStore()
+  function toggleCompleted() {
+    taskStore.setCurrentTask(task.id)
+    console.log(task.name)
+    taskStore.toggleCompleted()
+    console.log(taskStore.currentTask.completed)
+  }
   function sendTaskToModal(task) {
     taskStore.setCurrentTask(task.id)
     showModal.value = true
