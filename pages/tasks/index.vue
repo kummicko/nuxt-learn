@@ -13,7 +13,7 @@
         <button @click="showModal=true; showCreateModal=true" class="bg-blue-500 rounded shadow shadow-black text-md text-white mb-1 px-3 py-1">Create New Task</button>
       </div>
       <TransitionGroup name="list" tag="ul">
-        <li class="list-item" v-for="task in taskStore.tasks">
+        <li class="list-item" v-for="task in taskStore.tasks" :key="task.id">
           <TaskCard :task="task" />
         </li>
       </TransitionGroup>
@@ -30,5 +30,14 @@
 <style scoped>
   .list-item {
     margin-bottom: 0.5rem;
+  }
+  .list-enter-from{
+
+  }
+  .list-enter-to {
+
+  }
+  .list-enter-active {
+
   }
 </style>
