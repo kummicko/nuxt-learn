@@ -20,6 +20,10 @@ export const useTaskStore = defineStore('taskStore', {
         setCurrentTask(id: string) {
           this.currentTask = JSON.parse(JSON.stringify(this.tasks.find(task => task.id === id)))
         },
+        async createTask(newTask: string) {
+          const taskToAdd = await useFetch('/api/tasks', { method: 'post', body: { name: newTask } })
+          this.tasks.push((taskToAdd.data.value as unknown as TaskObject))
+        },
         async updateTask() {
           const taskToUpdate = this.tasks.find(task => task.id === this.currentTask.id)
           if(taskToUpdate) {
@@ -34,6 +38,7 @@ export const useTaskStore = defineStore('taskStore', {
                         })
         },
         async deleteTask() {
+          this.tasks = this.tasks.filter(task => task.id !== this.currentTask.id)
           await useFetch('api/tasks/'+this.currentTask.id, { method: 'delete' })
         }
     }

@@ -6,6 +6,7 @@
         <div class="modal" role="dialog" v-if="showModal">
             <EditModal v-if="showEditModal" />
             <DeleteModal v-if="showDeleteModal" />
+            <CreateModal v-if="showCreateModal" />
         </div>
     </transition>
 </template>
@@ -14,6 +15,7 @@
   const showModal = useModal()
   const showEditModal = useEditModal()
   const showDeleteModal = useDeleteModal()
+  const showCreateModal = useCreateModal()
 </script>
 
 <style scoped>

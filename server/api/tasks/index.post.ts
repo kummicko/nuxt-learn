@@ -1,20 +1,30 @@
 import { tasks } from "../../dbModels";
 
 interface IRequestBody {
-    name: string,
-    completed: boolean
+    name: string
   }
   export default defineEventHandler(async (event) => {
     console.log("POST /api/tasks");
-    const { name, completed } = await readBody<IRequestBody>(event);
+    const { name } = await readBody<IRequestBody>(event);
     try {
-        const newTaskData = await tasks.create({name, completed});
+        const newTaskData = await tasks.create({ name });
         return {
             id: newTaskData._id,
             name: newTaskData.name,
-            completed: newTaskData.completed
+            completed: newTaskData.completed,
+            created: newTaskData.createdAt
         }
-    //   const taskData = await users.findOne({
+    } catch (err) {
+      console.dir(err);
+      event.node.res.statusCode = 500;
+      return {
+        code: "ERROR",
+        message: "Something wrong.",
+      };
+    }
+  });
+
+      //   const taskData = await users.findOne({
     //     email,
     //   });
     //   if (userData) {
@@ -39,12 +49,3 @@ interface IRequestBody {
     //       email: newUserData.email
     //     };
     //   }
-    } catch (err) {
-      console.dir(err);
-      event.node.res.statusCode = 500;
-      return {
-        code: "ERROR",
-        message: "Something wrong.",
-      };
-    }
-  });

@@ -4,7 +4,7 @@ import bcrypt from "mongoose-bcrypt";
 const schema = new mongoose.Schema(
     {
         name: { type: String },
-        completed: { type: Boolean },
+        completed: { type: Boolean, default: false },
     },
     { timestamps: true, strict: true, strictQuery: true }
 );

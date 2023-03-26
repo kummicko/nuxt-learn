@@ -9,8 +9,8 @@
       <div class="flex justify-end mt-2 md:mt-0">
           <!-- <Icon name="uil:github" size="2rem" /> -->
           <button v-if="!task.completed" @click="sendTaskToModal(task); showEditModal=true" class="small-button mt-auto bg-blue-500 text-white mr-2"><span class="mr-1">&#x270E;</span>Edit</button>
-          <button v-if="!task.completed" @click="task.completed=true; toggleCompleted()" class="small-button mt-auto bg-green-500 text-white mr-1"><span class="mr-2">&#x2714;</span>Mark completed</button>
-          <button v-if="task.completed" @click="task.completed=false; toggleCompleted()" class="small-button mt-auto bg-yellow-500 mr-1"><span class="mr-2">&#x2714;</span>Mark uncompleted</button>
+          <button v-if="!task.completed" @click="task.completed=true; toggleCompleted(task)" class="small-button mt-auto bg-green-500 text-white mr-1"><span class="mr-2">&#x2714;</span>Mark completed</button>
+          <button v-if="task.completed" @click="task.completed=false; toggleCompleted(task)" class="small-button mt-auto bg-yellow-500 mr-1"><span class="mr-2">&#x2714;</span>Mark uncompleted</button>
           <button v-if="task.completed" @click="sendTaskToModal(task); showDeleteModal=true" class="small-button mt-auto bg-red-600 text-white"><span class="mr-1">&#x2717;</span>Delete</button> 
       </div>
     </div>
@@ -22,7 +22,7 @@
   const showEditModal = useEditModal()
   const showDeleteModal = useDeleteModal()
   const taskStore = useTaskStore()
-  function toggleCompleted() {
+  function toggleCompleted(task) {
     taskStore.setCurrentTask(task.id)
     taskStore.updateTask()
   }
