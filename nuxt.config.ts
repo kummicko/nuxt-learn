@@ -10,9 +10,9 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
-      title: 'Learn Nuxt',
+      title: 'Manager',
       meta: [
-        { name: 'description', content: 'Everything about Nuxt 3'}
+        { name: 'description', content: 'Simple Project Manager'}
       ],
       link: [
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' }

@@ -1,5 +1,5 @@
 export const useModal = () => useState<boolean>('modal', () => false)
-export const useEditModal = () => useState<boolean>('editModal', () => false)
+export const useEditTaskModal = () => useState<boolean>('editTaskModal', () => false)
 export const useDeleteModal = () => useState<boolean>('deleteModal', () => false)
-export const useCreateModal = () => useState<boolean>('createModal', () => false)
+export const useCreateTaskModal = () => useState<boolean>('createTaskModal', () => false)
 export const useNewTask = () => useState<string>('newTask', () => '')

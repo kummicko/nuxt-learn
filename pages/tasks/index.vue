@@ -2,7 +2,7 @@
   <Modal />
     <div class="grid gap-2">
       <div class="flex">
-        <button @click="showModal=true; showCreateModal=true" class="bg-blue-500 rounded shadow shadow-black text-md text-white mb-1 px-3 py-1">Create New Task</button>
+        <button @click="showModal=true; showCreateTaskModal=true" class="bg-blue-500 rounded shadow shadow-black text-md italic text-white mb-1 px-3 py-1">Create New Task</button>
       </div>
       <TransitionGroup name="list" tag="ul" appear>
         <li class="list-item" v-for="task in taskStore.tasks" :key="task.id">
@@ -16,7 +16,13 @@
     const taskStore = useTaskStore()
     taskStore.getTasks()
     const showModal = useModal()
-    const showCreateModal = useCreateModal()
+    const showCreateTaskModal = useCreateTaskModal()
+    useHead({
+    title: 'Manager | Tasks',
+    meta: [
+      { name: 'description', content: 'Task Manager'}
+    ]
+  })
 </script>
 
 <style scoped>
