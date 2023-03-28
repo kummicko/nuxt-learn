@@ -4,11 +4,16 @@ type TaskObject = {
     created: string;
     id: string;
 }
+type ProjectObject = {
+    name: string;
+    id: string;
+}
 
 export const useTaskStore = defineStore('taskStore', {
     state: () => ({
       tasks: [] as TaskObject[],
-      currentTask: null as unknown as TaskObject || null
+      currentTask: null as unknown as TaskObject || null,
+      projects: [] as ProjectObject[]
     }),
     actions: {
         async getTasks() {
@@ -40,6 +45,16 @@ export const useTaskStore = defineStore('taskStore', {
         async deleteTask() {
           this.tasks = this.tasks.filter(task => task.id !== this.currentTask.id)
           await useFetch('api/tasks/'+this.currentTask.id, { method: 'delete' })
+        },
+        async getProjects() {
+          const {data: projects} = await useFetch('/api/projects')
+          if(projects.value) {
+            this.projects = Array.from(JSON.parse(JSON.stringify(projects.value)))
+          }
+        },
+        async createProject(newProject: string, newProjectStartDate: string ) {
+          const projectToAdd = await useFetch('/api/projects', { method: 'post', body: { name: newProject, startDate: newProjectStartDate } })
+          this.projects.push((projectToAdd.data.value as unknown as ProjectObject))
         }
     }
 })

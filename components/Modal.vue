@@ -4,9 +4,10 @@
     </transition>
     <transition name="pop" appear>
         <div class="modal" role="dialog" v-if="showModal">
-            <EditTaskModal v-if="showEditTaskModal" />
-            <DeleteModal v-if="showDeleteModal" />
-            <CreateTaskModal v-if="showCreateTaskModal" />
+          <EditTaskModal v-if="showEditTaskModal" />
+          <DeleteTaskModal v-if="showDeleteTaskModal" />
+          <CreateTaskModal v-if="showCreateTaskModal" />
+          <CreateProjectModal v-if="showCreateProjectModal"/>
         </div>
     </transition>
 </template>
@@ -14,8 +15,9 @@
 <script setup>
   const showModal = useModal()
   const showEditTaskModal = useEditTaskModal()
-  const showDeleteModal = useDeleteModal()
+  const showDeleteTaskModal = useDeleteTaskModal()
   const showCreateTaskModal = useCreateTaskModal()
+  const showCreateProjectModal = useCreateProjectModal()
 </script>
 
 <style scoped>

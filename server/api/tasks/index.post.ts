@@ -3,26 +3,27 @@ import { tasks } from "../../dbModels";
 interface IRequestBody {
     name: string
   }
-  export default defineEventHandler(async (event) => {
-    console.log("POST /api/tasks");
-    const { name } = await readBody<IRequestBody>(event);
-    try {
-        const newTaskData = await tasks.create({ name });
-        return {
-            id: newTaskData._id,
-            name: newTaskData.name,
-            completed: newTaskData.completed,
-            created: newTaskData.createdAt
-        }
-    } catch (err) {
-      console.dir(err);
-      event.node.res.statusCode = 500;
+
+export default defineEventHandler(async (event) => {
+  console.log("POST /api/tasks");
+  const { name } = await readBody<IRequestBody>(event);
+  try {
+      const newTaskData = await tasks.create({ name });
       return {
-        code: "ERROR",
-        message: "Something wrong.",
-      };
-    }
-  });
+          id: newTaskData._id,
+          name: newTaskData.name,
+          completed: newTaskData.completed,
+          created: newTaskData.createdAt
+      }
+  } catch (err) {
+    console.dir(err);
+    event.node.res.statusCode = 500;
+    return {
+      code: "ERROR",
+      message: "Something went wrong.",
+    };
+  }
+});
 
       //   const taskData = await users.findOne({
     //     email,

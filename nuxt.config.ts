@@ -28,4 +28,9 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['stores'],
   },
+  components: [
+      { path: '~/components/task', pathPrefix: false },
+      { path: '~/components/project', pathPrefix: false },
+      { path: '~/components', pathPrefix: false },
+  ]
 })
