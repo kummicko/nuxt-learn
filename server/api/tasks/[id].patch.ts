@@ -1,27 +1,29 @@
+import { ObjectId } from "mongoose";
 import { tasks } from "../../dbModels"
 
 interface IRequestBody {
     id: string;
     name: string;
-    completed: string;
+    completed: boolean;
+    projectId: any;
 }
 
 export default defineEventHandler(async (event) => {
   const taskId = event?.context?.params?.id;
-  const { name, completed } = await readBody<IRequestBody>(event)
-  const filter = { _id: taskId }
-  const update = { name: name, completed: completed }
+  const { name, completed, projectId } = await readBody<IRequestBody>(event)
   try {
-      await tasks.findOneAndUpdate( filter, update, {
-        returnOriginal: false
-      })
-  } catch (err) {
-    console.dir(err);
-    event.node.res.statusCode = 500;
-    return {
-      code: "ERROR",
-      message: "Something wrong.",
+    const task = await tasks.findById(taskId)
+    if(task) {
+      task.name = name
+      task.completed = completed
+      if(projectId) {
+        task.project = projectId
+      }
+      await task.save()
+      const newtask = await tasks.findById(taskId).populate('project')
+      return newtask
     }
+  } catch (err) {
+    console.log(err)
   }
-  return {message: "Successfully updated"}
 })

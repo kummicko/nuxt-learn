@@ -8,11 +8,11 @@
           </div>
           <div>
             <label for="startdate" class="block mb-2 text-sm font-medium text-gray-600  text-left">Start Date</label>
-            <input v-model="newProjectStartDate.value" type="datetime-local" id="startdate" name="startdate" class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
+            <input v-model="newProjectStartDate.value" type="date" id="startdate" name="startdate" class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" required>
           </div>
           <div>
             <label for="enddate" class="block mb-2 text-sm font-medium text-gray-600 dark:text-white text-left">End Date</label>
-            <input type="datetime-local" id="enddate" name="enddate" class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
+            <input v-model="newProjectEndDate.value" type="date" id="enddate" name="enddate" class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
           </div>
         </div>
       </form>
@@ -29,11 +29,13 @@
   const taskStore = useTaskStore()
   const newProject = useNewProject
   const newProjectStartDate = useNewProjectStartDate
+  const newProjectEndDate = useNewProjectEndDate
     function createNewProject() {
       if (newProject.value.length > 0) {
-        taskStore.createProject(newProject.value, newProjectStartDate.value)
+        taskStore.createProject(newProject.value, newProjectStartDate.value, newProjectEndDate.value)
         newProject.value = ''
         newProjectStartDate.value = ''
+        newProjectEndDate.value = ''
         showModal.value = false
         showCreateProjectModal.value = false
       }

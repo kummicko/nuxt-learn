@@ -20,6 +20,10 @@
     </div>
 </template>
 
+<script setup>
+  const taskStore = useTaskStore()
+</script>
+
 <style scoped>
   .router-link-exact-active {
     color: #12b488;

@@ -3,13 +3,13 @@ import { tasks } from "../../dbModels";
 export default defineEventHandler(async (event) => {
     console.log("GET /api/tasks");
     try {
-        console.log("Find tasks");
-        const tasksData = await tasks.find();
+        const tasksData = await tasks.find().populate('project');
         return tasksData.map((task) => ({
             name: task.name,
             completed: task.completed,
             created: task.createdAt,
-            id: task._id
+            id: task._id,
+            project: task.project
         }));
     } catch (err) {
         console.dir(err);

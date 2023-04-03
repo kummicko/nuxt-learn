@@ -6,7 +6,9 @@ export default defineEventHandler(async (event) => {
         const projectsData = await projects.find()
         return projectsData.map(project => ({
             name: project.name,
-            id: project._id
+            id: project._id,
+            startDate: project.startDate,
+            endDate: project.endDate
         }))
     } catch (err) {
         console.dir(err)

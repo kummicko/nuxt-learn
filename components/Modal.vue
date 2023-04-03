@@ -1,6 +1,6 @@
 <template>
     <transition name="fade" appear>
-        <div class="modal-overlay" v-if="showModal" @click="showModal=false"></div>
+        <div class="modal-overlay" v-if="showModal"></div>
     </transition>
     <transition name="pop" appear>
         <div class="modal" role="dialog" v-if="showModal">

@@ -14,11 +14,12 @@
   const showModal = useModal()
   const showCreateProjectModal = useCreateProjectModal()
   const taskStore = useTaskStore()
+  taskStore.getTasks()
   taskStore.getProjects()
   useHead({
     title: 'Manager | Projects',
     meta: [
-      { name: 'description', content: 'Task Manager'}
+      { name: 'description', content: 'Project Manager'}
     ]
   })
 </script>

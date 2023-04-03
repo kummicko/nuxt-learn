@@ -1,10 +1,11 @@
 <template>
     <div class="card flex flex-col lg:flex-row">
-      <div>
-          <p class="inline-block align-middle italic mr-4 font-light text-sm text-gray-600"><span class="mr-1">Created:</span>{{ formatDate(task.created) }}</p>
+      <div class="relative flex gap-1 my-auto lg:flex-col">
+        <div v-if="task.project" class="bg-blue-400 text-sm text-white px-1 mr-1 py-0.5 rounded lg:mr-auto">{{ task.project.name }}</div>
+          <p class="italic mr-4 my-auto font-light text-sm text-gray-600"><span class="mr-1">Created:</span>{{ customStore.formatDate(task.created) }}</p>
       </div>
-      <div class="flex-1">
-          <p class="inline-block align-middle font-bold text-gray-500 text-lg" :class="task.completed ? 'text-decoration: line-through': 'text-decoration: none'">{{ task.name }}</p>
+      <div class="flex-1 my-auto">
+          <p class="font-bold text-gray-500 text-lg" :class="task.completed ? 'text-decoration: line-through': 'text-decoration: none'">{{ task.name }}</p>
       </div>
       <div class="flex justify-end mt-2 md:mt-0">
           <button v-if="!task.completed" @click="sendTaskToModal(task); showEditTaskModal=true" class="small-button mt-auto bg-blue-500 text-white mr-2"><span class="mr-1">&#x270E;</span>Edit</button>
@@ -21,6 +22,7 @@
   const showEditTaskModal = useEditTaskModal()
   const showDeleteTaskModal = useDeleteTaskModal()
   const taskStore = useTaskStore()
+  const customStore = useCustomStore()
   function toggleCompleted(task) {
     taskStore.setCurrentTask(task.id)
     taskStore.updateTask()
@@ -29,38 +31,6 @@
     taskStore.setCurrentTask(task.id)
     showModal.value = true
   }
-// custom Date format
-  const formatDate = (d) => {
-    const datum = new Date(d)
-    const months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ]
-    const days = [
-        'Sun',
-        'Mon',
-        'Tue',
-        'Wed',
-        'Thu',
-        'Fri',
-        'Sat'
-    ]
-    const year = datum.getFullYear()
-    const monthName = months[datum.getMonth()]
-    const dayName = days[datum.getDay()]
-    const date = datum.getDate()
-    return `${date} ${monthName} ${year}`
- }
 </script>
 
 <style scoped>
