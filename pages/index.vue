@@ -8,8 +8,8 @@
 
 <script setup>
   const taskStore = useTaskStore()
-  taskStore.getTasks()
-  taskStore.getProjects()
+  // taskStore.getTasks()
+  // taskStore.getProjects()
 </script>
 
 <style scoped>

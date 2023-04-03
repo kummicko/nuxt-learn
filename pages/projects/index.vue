@@ -14,8 +14,6 @@
   const showModal = useModal()
   const showCreateProjectModal = useCreateProjectModal()
   const taskStore = useTaskStore()
-  taskStore.getTasks()
-  taskStore.getProjects()
   useHead({
     title: 'Manager | Projects',
     meta: [

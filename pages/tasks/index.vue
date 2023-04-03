@@ -14,7 +14,6 @@
 
 <script setup>
     const taskStore = useTaskStore()
-    taskStore.getTasks()
     const showModal = useModal()
     const showCreateTaskModal = useCreateTaskModal()
     useHead({
