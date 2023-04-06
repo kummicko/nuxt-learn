@@ -1,13 +1,10 @@
 import { users } from "../../dbModels";
-interface IRequestBody {
-    email: string;
-    password: string;
-  }
+
   export default defineEventHandler(async (event) => {
     console.log("POST /api/users/signin");
-    const { email, password } = await readBody<IRequestBody>(event);  // Check if email is passed.
+    const { email, password } = await readBody(event);  // Check if email is passed.
     if (!email) {
-      event.res.statusCode = 400;
+      event.node.res.statusCode = 400;
       return {
         code: "EMAIL_REQUIRED",
         message: "Body malformed: email is required.",
@@ -15,7 +12,7 @@ interface IRequestBody {
     }
     // Check if password is passed.
     if (!password) {
-      event.res.statusCode = 400;
+      event.node.res.statusCode = 400;
       return {
         code: "PASSWORD_REQUIRED",
         message: "Body malformed: password is required.",
@@ -23,19 +20,21 @@ interface IRequestBody {
     }  try {
       console.log("Find user");
       const userData = await users.findOne({
-        email: email.toLowerCase(),
-      });    if (userData) {
+        email: email
+      });
+      if (userData) {
         console.log("User found");
+        console.log(userData.password)
         const isPasswordValid = await userData.verifyPasswordSync(password);
         if (isPasswordValid) {
           // Generate token or create session here
           return {
             id: userData._id,
-            name: userData.name,
+            email: userData.email,
           };
         } else {
           console.log("Password is not valid");
-          event.res.statusCode = 404;
+          event.node.res.statusCode = 404;
           return {
             code: "USER_NOT_FOUND",
             message: "User with given email and password doesn't exists.",
@@ -43,7 +42,7 @@ interface IRequestBody {
         }
       } else {
         console.log("User not found");
-        event.res.statusCode = 404;
+        event.node.res.statusCode = 404;
         return {
           code: "USER_NOT_FOUND",
           message: "User with given email and password doesn't exists.",
@@ -51,7 +50,7 @@ interface IRequestBody {
       }
     } catch (err) {
       console.dir(err);
-      event.res.statusCode = 500;
+      event.node.res.statusCode = 500;
       return {
         code: "ERROR",
         message: "Something wrong.",

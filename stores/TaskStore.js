@@ -30,24 +30,37 @@ export const useTaskStore = defineStore('taskStore', {
                           projectId: projectId
                         })
                       })
-      const taskToUpdate = this.tasks.find(task => task.id === this.currentTask.id)
-      console.log(projectId)
+      const taskToUpdate = this.tasks.find(task => task.id === taskFromDB.value._id)
       if(taskToUpdate) {
         taskToUpdate.name = taskFromDB.value.name
         taskToUpdate.completed = taskFromDB.value.completed
-        if(taskFromDB.value.project) {
-          taskToUpdate.project = taskFromDB.value.project
-          const projectToUpdate = this.projects.find(project => project.id = projectId)
-          projectToUpdate.tasks.push(taskToUpdate)
-          projectToUpdate.taskCount++
+        if(projectId) {
+          if(!taskToUpdate.project) {
+            const projectToAddTask = this.projects.find(project => project.id === taskFromDB.value.project._id)
+            taskToUpdate.project = taskFromDB.value.project
+            projectToAddTask.taskCount++
+          }
+          if(taskFromDB.value.project.id !== projectId) {
+            const projectToRemoveTask = this.projects.find(project => project.id === taskToUpdate.project._id)
+            const projectToAddTask = this.projects.find(project => project.id === taskFromDB.value.project._id)
+            taskToUpdate.project = taskFromDB.value.project
+            projectToRemoveTask.tasks = projectToRemoveTask.tasks.filter(task => task.id !== taskToUpdate.id)
+            projectToRemoveTask.taskCount--
+            projectToAddTask.tasks.push(taskToUpdate)
+            projectToAddTask.taskCount++
+          }
         }
       }
       },
       async deleteTask() {
         // remove task from Store
         this.tasks = this.tasks.filter(task => task.id !== this.currentTask.id)
+        // remove task from project tasks if exists
+        const projectTask = this.projects.find(project => project.tasks.includes(this.currentTask))
+        projectTask.tasks = projectTask.tasks.filter(task => task.id !== this.currentTask.id)
+        projectTask.taskCount--
         // delete task in database
-        await useFetch('api/tasks/'+this.currentTask.id, { method: 'delete' })
+        await useFetch('/api/tasks/'+this.currentTask.id, { method: 'delete' })
       },
       async getProjects() {
         if(!this.projectsLoaded) {

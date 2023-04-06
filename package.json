@@ -20,6 +20,8 @@
   "dependencies": {
     "@formkit/nuxt": "^0.16.2",
     "@pinia/nuxt": "^0.4.7",
+    "@vuelidate/core": "^2.0.2",
+    "@vuelidate/validators": "^2.0.2",
     "pinia": "^2.0.33"
   },
   "overrides": {

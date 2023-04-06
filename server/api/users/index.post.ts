@@ -10,30 +10,32 @@ interface IRequestBody {
   export default defineEventHandler(async (event) => {
     console.log("POST /api/users");
     const { email, password, firstName, lastName } = await readBody<IRequestBody>(event);
+    console.log(firstName, lastName, email, password)
     try {
       const userData = await users.findOne({
         email,
       });
       if (userData) {
         console.log(`User with email ${email} already exists`);
-        event.res.statusCode = 409;
+        event.node.res.statusCode = 409;
         return {
           code: "USER_EXISTS",
           message: "User with given email already exists.",
         };
       } else {
         console.log("Create user");
-        const newUserData = await users.create({
-          email,
-          password,
-          firstName,
-          lastName
-        });
+        // const newUserData = await users.create({
+        //   email,
+        //   password,
+        //   firstName,
+        //   lastName
+        // });
         return {
-          id: newUserData._id,
-          firstName: newUserData.firstName,
-          lastName: newUserData.lastName,
-          email: newUserData.email
+          // id: newUserData._id,
+          // firstName: newUserData.firstName,
+          // lastName: newUserData.lastName,
+          // email: newUserData.email
+          message: "ok"
         };
       }
     } catch (err) {

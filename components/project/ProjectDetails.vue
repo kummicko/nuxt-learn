@@ -9,6 +9,7 @@
 
 <script setup>
   const { project } = defineProps(['project'])
+  const taskStore = useTaskStore()
 </script>
 
 <style scoped>
