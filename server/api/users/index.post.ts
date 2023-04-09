@@ -24,18 +24,18 @@ interface IRequestBody {
         };
       } else {
         console.log("Create user");
-        // const newUserData = await users.create({
-        //   email,
-        //   password,
-        //   firstName,
-        //   lastName
-        // });
+        const newUserData = await users.create({
+          email,
+          password,
+          firstName,
+          lastName
+        });
         return {
-          // id: newUserData._id,
-          // firstName: newUserData.firstName,
-          // lastName: newUserData.lastName,
-          // email: newUserData.email
-          message: "ok"
+          id: newUserData._id,
+          firstName: newUserData.firstName,
+          lastName: newUserData.lastName,
+          email: newUserData.email,
+          message: "User created successfully"
         };
       }
     } catch (err) {

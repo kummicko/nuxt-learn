@@ -1,4 +1,5 @@
 <script setup>
+import { useToast, POSITION } from 'vue-toastification'
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, sameAs, minLength, helpers } from '@vuelidate/validators';
 const formData = reactive({
@@ -37,17 +38,21 @@ const v$ = useVuelidate(rules, formData)
 async function submitForm () {
   v$.value.$validate();
   if (!v$.value.$error) {
-    await useFetch('/api/users', {
-          method: 'post',
-          body: { firstName: formData.firstName,
-                  lastName: formData.lastName,
-                  password: formData.password,
-                  email: formData.email 
-                }
-        })
-      
+    const { data, error } = await useFetch('/api/users', {
+      method: 'post',
+      body: { firstName: formData.firstName,
+              lastName: formData.lastName,
+              password: formData.password,
+              email: formData.email 
+            },
+      })
+      if(data.value){
+        useToast().success(`User ${data.value.firstName} ${data.value.lastName} successfuly created`, { position: POSITION.TOP_CENTER })
+      }else if(error.value){
+        useToast().error(error.value.data.message, { position: POSITION.TOP_CENTER })
+      }
     }
-};
+  };
 </script>
 
 <template>

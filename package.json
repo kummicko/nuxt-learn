@@ -22,7 +22,8 @@
     "@pinia/nuxt": "^0.4.7",
     "@vuelidate/core": "^2.0.2",
     "@vuelidate/validators": "^2.0.2",
-    "pinia": "^2.0.33"
+    "pinia": "^2.0.33",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "overrides": {
     "vue": "latest"
