@@ -7,9 +7,9 @@ export const useTaskStore = defineStore('taskStore', {
     projectsLoaded: false
   }),
   actions: {
-      async getTasks() {
+      async getTasks(id) {
         if(!this.tasksLoaded) {
-          const {data: tasks} = await useFetch('/api/tasks')
+          const {data: tasks} = await useFetch('/api/tasks/user/'+id)
           this.tasks = tasks.value
           this.tasksLoaded = true
         }
@@ -17,8 +17,8 @@ export const useTaskStore = defineStore('taskStore', {
       setCurrentTask(id) {
         this.currentTask = this.tasks.find(task => task.id === id)
       },
-      async createTask(newTask) {
-        const taskToAdd = await useFetch('/api/tasks', { method: 'post', body: { name: newTask } })
+      async createTask(newTask, userId) {
+        const taskToAdd = await useFetch('/api/tasks', { method: 'post', body: { name: newTask, userId: userId } })
         this.tasks.push((taskToAdd.data.value))
       },
       async updateTask(projectId) {

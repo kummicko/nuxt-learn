@@ -14,10 +14,11 @@
     const showModal = useModal()
     const showCreateTaskModal = useCreateTaskModal()
     const taskStore = useTaskStore()
+    const userStore = useUserStore()
     const newTask = useNewTask
     function createNewTask() {
       if (newTask.value.length > 0) {
-        taskStore.createTask(newTask.value)
+        taskStore.createTask(newTask.value, userStore.currentUser.id)
         newTask.value = ''
         showModal.value = false
         showCreateTaskModal.value = false

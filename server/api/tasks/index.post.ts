@@ -1,14 +1,15 @@
 import { tasks } from "../../dbModels";
 
 interface IRequestBody {
-    name: string
+    name: string,
+    userId: string
   }
 
 export default defineEventHandler(async (event) => {
   console.log("POST /api/tasks");
-  const { name } = await readBody<IRequestBody>(event);
+  const { name, userId } = await readBody<IRequestBody>(event);
   try {
-      const newTaskData = await tasks.create({ name });
+      const newTaskData = await tasks.create({ name, userId });
       return {
           id: newTaskData._id,
           name: newTaskData.name,

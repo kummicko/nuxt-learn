@@ -11,6 +11,11 @@
 </template>
 
 <script setup>
+  definePageMeta({
+    middleware: [
+      'auth'
+    ]
+  })
   const showModal = useModal()
   const showCreateProjectModal = useCreateProjectModal()
   const taskStore = useTaskStore()

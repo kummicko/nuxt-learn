@@ -13,14 +13,21 @@
 </template>
 
 <script setup>
-    const taskStore = useTaskStore()
-    const showModal = useModal()
-    const showCreateTaskModal = useCreateTaskModal()
-    useHead({
-    title: 'Manager | Tasks',
-    meta: [
-      { name: 'description', content: 'Task Manager'}
+  definePageMeta({
+    middleware: [
+      'auth'
     ]
+  })
+  const taskStore = useTaskStore()
+  const userStore = useUserStore()
+  taskStore.getTasks(userStore.currentUser.id)
+  const showModal = useModal()
+  const showCreateTaskModal = useCreateTaskModal()
+  useHead({
+  title: 'Manager | Tasks',
+  meta: [
+    { name: 'description', content: 'Task Manager'}
+  ]
   })
 </script>
 

@@ -2,8 +2,6 @@ import { users } from "../../dbModels";
 
 export default defineEventHandler(async (event) => {
   const userId = event?.context?.params?.id;
-  console.log(`GET /api/users/${userId}`)
-
   try {
     console.log("Find user");
     const userData = await users.findOne({
